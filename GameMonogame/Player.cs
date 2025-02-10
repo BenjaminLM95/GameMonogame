@@ -20,22 +20,34 @@ namespace GameMonogame
         private float flapForce = 30f;
         private float gravityDownSpeed = 14f;
         private float fishRotation = 0f;
+        private GameTime gameTime;
 
-        private GameManager gameManager;
+        private float _deltaTime; 
 
-        public Player(GameManager _game, Vector2 initialPosition) : base(Game, initialPosition) 
+        /// <summary>
+        /// Creating the player. This needs a Game Manager and a vecto2 which will be the initial position
+        /// </summary>
+        /// <remarks>
+        /// This game is so cool!!
+        /// </remarks>
+        /// <param name="_game"></param>
+        /// <param name="initialPosition"></param>
+
+        public Player(GameManager _game, Vector2 initialPosition) : base(_game, initialPosition)
         {
+            position = initialPosition;
             gameManager = _game;
             fish_texture = gameManager.Content.Load<Texture2D>("Blue_Fish"); 
             
         }
 
-        public void Update(float deltaTime) 
+        public void Update(GameTime gameTime) 
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                gameManager.Exit(); 
+                
 
-            float deltaTime = gameTime.ElapsedGameTime.Milliseconds * 0.01f;
+            _deltaTime = gameTime.ElapsedGameTime.Milliseconds * 0.01f;
             // TODO: Add your update logic here
 
             KeyboardState keyboardState = Keyboard.GetState();
@@ -52,14 +64,14 @@ namespace GameMonogame
                 isJumpPressed = false;
             }
 
-            position.Y += gravity * deltaTime;
+            position.Y += gravity * _deltaTime;
 
             int heigthOfWindow = gameManager.Graphics.PreferredBackBufferHeight;
             int widthOfWindow = gameManager.Graphics.PreferredBackBufferWidth;
 
             if (gravity < maxGravity)
             {
-                gravity = +deltaTime * gravityDownSpeed;
+                gravity = +_deltaTime * gravityDownSpeed;
             }
 
             if (gravity < 0)

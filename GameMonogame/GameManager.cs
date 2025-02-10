@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Design;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -9,6 +10,9 @@ namespace GameMonogame
     {
         private GraphicsDeviceManager _graphics;
 
+        /// <summary>
+        /// this is the public graphic device manager which it has only a get. 
+        /// </summary>
         public GraphicsDeviceManager Graphics { get { return _graphics;  } }      
 
         private SpriteBatch _spriteBatch;
@@ -17,7 +21,9 @@ namespace GameMonogame
 
         private Player player; 
 
-        private List<GameEntity> GameEntities = new List<GameEntity>(); 
+        private List<GameEntity> GameEntities = new List<GameEntity>();
+
+        public Texture2D fish_texture; 
 
 
         public GameManager()
@@ -30,14 +36,16 @@ namespace GameMonogame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            GameEntities.Add(new Player(this, new Vector2(100, 100))); 
+            //GameEntities.Add(new Player(this, new Vector2(100, 100)));
+            player = new Player(this, new Vector2(100, 100));
+
             base.Initialize();
 
         }
 
         public void CreatePipe(Vector2 pipePosition) 
         {
-            var newPipe = new Pipe(new Pipe); 
+            var newPipe = new Pipe(this, pipePosition);   
         }
 
         protected override void LoadContent()
@@ -51,8 +59,8 @@ namespace GameMonogame
 
         protected override void Update(GameTime gameTime)
         {
-            
-
+            player.Update(gameTime);
+            Draw(gameTime); 
             base.Update(gameTime);
         }
 
@@ -64,12 +72,7 @@ namespace GameMonogame
 
             //_spriteBatch.Draw(fish_texture, movementVector, Color.White);
 
-            
-            _spriteBatch.Draw(fish_texture, new Rectangle((int)movementVector.X, (int)movementVector.Y, 
-            fish_texture.Width, fish_texture.Height), null, 
-            Color.White, fishRotation, new Vector2(fish_texture.Width * 0.5f, 
-            fish_texture.Height * 0.5f), SpriteEffects.None, 0.0f);
-            
+            player.Draw(); 
 
             _spriteBatch.End();
             // TODO: Add your drawing code here

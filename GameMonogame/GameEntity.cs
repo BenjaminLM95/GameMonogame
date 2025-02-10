@@ -20,13 +20,18 @@ namespace GameMonogame
 
         protected Vector2 movementDirection;
 
-
+        public GameEntity(GameManager game, Vector2 initialPosition) 
+        {
+            position = initialPosition;
+            gameManager = game;
+            movementDirection = new Vector2(-80, 0); 
+        }
         public void Draw()
         {
-            gameManager.SpriteBatch.Draw(fish_texture, new Rectangle((int)Position.X, (int)Position.Y,
-            fish_texture.Width, fish_texture.Height), null,
-            Color.White, Rotation, new Vector2(fish_texture.Width * 0.5f,
-            fish_texture.Height * 0.5f), SpriteEffects.None, 0.0f);
+            gameManager.SpriteBatch.Draw(gameManager.fish_texture, new Rectangle((int)position.X, (int)position.Y,
+            gameManager.fish_texture.Width, gameManager.fish_texture.Height), null,
+            Color.White, Rotation, new Vector2(gameManager.fish_texture.Width * 0.5f,
+            gameManager.fish_texture.Height * 0.5f), SpriteEffects.None, 0.0f);
         }
 
     }
