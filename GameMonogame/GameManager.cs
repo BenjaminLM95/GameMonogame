@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Design;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+
 
 namespace GameMonogame
 {
@@ -19,7 +18,11 @@ namespace GameMonogame
 
         public SpriteBatch SpriteBatch { get { return _spriteBatch; } }
 
-        private Player player; 
+        private Scene activeScene; 
+
+        private Player player;
+
+        private Pipe aPipe; 
 
         private List<GameEntity> GameEntities = new List<GameEntity>();
 
@@ -31,14 +34,21 @@ namespace GameMonogame
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Instance = this; 
         }
 
+        public static GameManager Instance;
+
+        public T Load<T>(string textureName) 
+        {
+            return Content.Load<T>(textureName);
+        }
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
             //GameEntities.Add(new Player(this, new Vector2(100, 100)));
             player = new Player(this, new Vector2(100, 100));
-
+            aPipe = new Pipe(this, new Vector2(300, 300));  
             base.Initialize();
 
         }
@@ -66,13 +76,14 @@ namespace GameMonogame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Beige);
+            GraphicsDevice.Clear(Color.SkyBlue);
 
             _spriteBatch.Begin();
 
             //_spriteBatch.Draw(fish_texture, movementVector, Color.White);
 
-            player.Draw(); 
+            player.Draw();
+            aPipe.DrawPipe(); 
 
             _spriteBatch.End();
             // TODO: Add your drawing code here

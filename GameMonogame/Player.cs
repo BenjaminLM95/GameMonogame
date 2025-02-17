@@ -20,6 +20,7 @@ namespace GameMonogame
         private float flapForce = 30f;
         private float gravityDownSpeed = 14f;
         private float fishRotation = 0f;
+        private float maxFishRotation = 20f; 
         private GameTime gameTime;
 
         private float _deltaTime; 
@@ -55,9 +56,10 @@ namespace GameMonogame
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 if (!isJumpPressed)
-                   position.Y -= flapForce;
-
-                isJumpPressed = true;
+                {
+                    gravity = flapForce;
+                    isJumpPressed = true;
+                }
             }
             else
             {
@@ -76,6 +78,10 @@ namespace GameMonogame
 
             if (gravity < 0)
             {
+                if (fishRotation > -maxFishRotation) fishRotation -= _deltaTime * 1.0f; 
+            } else
+            {
+                if (fishRotation < maxFishRotation) fishRotation += _deltaTime * 1.0f;     
             }
 
 
