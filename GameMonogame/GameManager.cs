@@ -22,11 +22,17 @@ namespace GameMonogame
 
         private Player player;
 
-        private Pipe aPipe; 
+        private Pipe aPipe;
+
+        private Pipe aPipe2;
+
+        private Pipe aPipe3;
 
         private List<GameEntity> GameEntities = new List<GameEntity>();
 
-        public Texture2D fish_texture; 
+        public Texture2D fish_texture;
+
+        private SpriteFont myFont; 
 
 
         public GameManager()
@@ -48,7 +54,10 @@ namespace GameMonogame
             // TODO: Add your initialization logic here
             //GameEntities.Add(new Player(this, new Vector2(100, 100)));
             player = new Player(this, new Vector2(100, 100));
-            aPipe = new Pipe(this, new Vector2(300, 300));  
+            aPipe = new Pipe(this, new Vector2(300, 300));
+            aPipe2 = new Pipe(this, new Vector2(300, 230));
+            aPipe3 = new Pipe(this, new Vector2(300, 160));
+            myFont = Content.Load<SpriteFont>("MyFont");
             base.Initialize();
 
         }
@@ -70,7 +79,10 @@ namespace GameMonogame
         protected override void Update(GameTime gameTime)
         {
             player.Update(gameTime);
-            Draw(gameTime); 
+            Draw(gameTime);
+            aPipe.Update(gameTime); 
+            aPipe2.Update(gameTime);
+            aPipe3.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -82,8 +94,12 @@ namespace GameMonogame
 
             //_spriteBatch.Draw(fish_texture, movementVector, Color.White);
 
-            player.Draw();
-            aPipe.DrawPipe(); 
+            player.DrawPlayer();
+            aPipe.DrawPipe();
+            aPipe2.DrawPipe();
+            aPipe3.DrawPipe();
+
+            _spriteBatch.DrawString(myFont, "Gravity: " + player._deltaTime.ToString() + "  Y: " + player.Position.Y.ToString(), new Vector2(0, 50), Color.Black); 
 
             _spriteBatch.End();
             // TODO: Add your drawing code here

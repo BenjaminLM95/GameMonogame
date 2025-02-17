@@ -13,17 +13,17 @@ namespace GameMonogame
     {
         private Texture2D fish_texture;
         private Rectangle recCollider; 
-        private Vector2 Position = new Vector2(100, 100);        
-        private float gravity = 10f;
+        public Vector2 Position = new Vector2(100, 100);        
+        public float gravity = 10f;
         private float maxGravity = 20f;
         private bool isJumpPressed = false;
-        private float flapForce = 30f;
+        private float flapForce = -30f;
         private float gravityDownSpeed = 14f;
         private float fishRotation = 0f;
         private float maxFishRotation = 20f; 
         private GameTime gameTime;
 
-        private float _deltaTime; 
+        public float _deltaTime; 
 
         /// <summary>
         /// Creating the player. This needs a Game Manager and a vecto2 which will be the initial position
@@ -78,16 +78,16 @@ namespace GameMonogame
 
             if (gravity < 0)
             {
-                if (fishRotation > -maxFishRotation) fishRotation -= _deltaTime * 1.0f; 
+                //if (fishRotation > -maxFishRotation) fishRotation -= _deltaTime * 1.0f; 
             } else
             {
-                if (fishRotation < maxFishRotation) fishRotation += _deltaTime * 1.0f;     
+                //if (fishRotation < maxFishRotation) fishRotation += _deltaTime * 1.0f;      
             }
 
 
         }
 
-        public void Draw() 
+        public void DrawPlayer() 
         {
             gameManager.SpriteBatch.Draw(fish_texture, new Rectangle((int)Position.X, (int)Position.Y,
             fish_texture.Width, fish_texture.Height), null,
