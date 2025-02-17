@@ -13,6 +13,13 @@ namespace GameMonogame
     {
         private Texture2D pipeTexture;
         private Vector2 Position;
+
+        public Vector2 _position 
+        {
+            get { return Position; }
+            set { Position = value; }
+        }
+
         private float pipeVelocity;
         private float _deltaTime;
 
@@ -29,8 +36,9 @@ namespace GameMonogame
         {
             _deltaTime = gameTime.ElapsedGameTime.Milliseconds * 0.01f;
 
-            if(Position.X > -80f)
-            Position.X -= pipeVelocity * _deltaTime; 
+            if (Position.X > -80f)
+                Position.X -= pipeVelocity * _deltaTime; 
+            
 
 
         }
@@ -40,6 +48,17 @@ namespace GameMonogame
             gameManager.SpriteBatch.Draw(pipeTexture, new Rectangle((int)Position.X, (int)Position.Y, pipeTexture.Width, pipeTexture.Height), Color.White);
         }
 
+        public void Respawn() 
+        {
+            Random rnd = new Random();
+            Position.X = rnd.Next(0, 230); 
+        }
+
+        public void SetPositionX(int positionX)
+        {
+            Position.X = positionX; 
+        }      
+        
 
     }
 }

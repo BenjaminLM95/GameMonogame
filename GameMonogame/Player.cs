@@ -12,18 +12,18 @@ namespace GameMonogame
     internal class Player : GameEntity
     {
         private Texture2D fish_texture;
-        private Rectangle recCollider; 
-        public Vector2 Position = new Vector2(100, 100);        
-        public float gravity = 10f;
-        private float maxGravity = 20f;
+        private Rectangle recCollider;               
+        private float gravity = 400f;
+        private float maxGravity = 800f;
         private bool isJumpPressed = false;
-        private float flapForce = -30f;
-        private float gravityDownSpeed = 14f;
+        private float flapForce = -300f;
+        private float gravityDownSpeed = 140f;
         private float fishRotation = 0f;
-        private float maxFishRotation = 20f; 
+        private float maxFishRotation = 5f; 
         private GameTime gameTime;
+        public int Points; 
 
-        public float _deltaTime; 
+        private float _deltaTime; 
 
         /// <summary>
         /// Creating the player. This needs a Game Manager and a vecto2 which will be the initial position
@@ -56,7 +56,7 @@ namespace GameMonogame
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 if (!isJumpPressed)
-                {
+                {                    
                     gravity = flapForce;
                     isJumpPressed = true;
                 }
@@ -66,7 +66,7 @@ namespace GameMonogame
                 isJumpPressed = false;
             }
 
-            position.Y += gravity * _deltaTime;
+            position.Y +=  gravity * _deltaTime;
 
             int heigthOfWindow = gameManager.Graphics.PreferredBackBufferHeight;
             int widthOfWindow = gameManager.Graphics.PreferredBackBufferWidth;
@@ -88,11 +88,12 @@ namespace GameMonogame
         }
 
         public void DrawPlayer() 
-        {
-            gameManager.SpriteBatch.Draw(fish_texture, new Rectangle((int)Position.X, (int)Position.Y,
+        {           
+
+            gameManager.SpriteBatch.Draw(fish_texture, new Rectangle((int)position.X, (int)position.Y,
             fish_texture.Width, fish_texture.Height), null,
             Color.White, fishRotation, new Vector2(fish_texture.Width * 0.5f,
-            fish_texture.Height * 0.5f), SpriteEffects.None, 0.0f);
+            fish_texture.Height * 0.5f), SpriteEffects.None, 0.0f);  
         }
 
     }

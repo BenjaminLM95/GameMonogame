@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 
@@ -54,9 +55,9 @@ namespace GameMonogame
             // TODO: Add your initialization logic here
             //GameEntities.Add(new Player(this, new Vector2(100, 100)));
             player = new Player(this, new Vector2(100, 100));
-            aPipe = new Pipe(this, new Vector2(300, 300));
-            aPipe2 = new Pipe(this, new Vector2(300, 230));
-            aPipe3 = new Pipe(this, new Vector2(300, 160));
+            aPipe = new Pipe(this, new Vector2(400, GetRandomNumber()));
+            aPipe2 = new Pipe(this, new Vector2(400, aPipe._position.Y - 70));
+            aPipe3 = new Pipe(this, new Vector2(400, aPipe._position.Y - 140));
             myFont = Content.Load<SpriteFont>("MyFont");
             base.Initialize();
 
@@ -76,6 +77,12 @@ namespace GameMonogame
             // TODO: use this.Content to load your game content here
         }
 
+        protected int GetRandomNumber()
+        {
+            Random random = new Random();
+            return random.Next(0, 230);
+        }
+
         protected override void Update(GameTime gameTime)
         {
             player.Update(gameTime);
@@ -83,6 +90,14 @@ namespace GameMonogame
             aPipe.Update(gameTime); 
             aPipe2.Update(gameTime);
             aPipe3.Update(gameTime);
+
+            if(aPipe._position.X < -80) 
+            {
+                aPipe.Respawn();
+                aPipe2._position = new Vector2(aPipe._position.X - 70, aPipe2._position.Y); 
+                aPipe3._position = new Vector2(aPipe._position.X - 140, aPipe3._position.Y);
+            }
+
             base.Update(gameTime);
         }
 
@@ -99,7 +114,7 @@ namespace GameMonogame
             aPipe2.DrawPipe();
             aPipe3.DrawPipe();
 
-            _spriteBatch.DrawString(myFont, "Gravity: " + player._deltaTime.ToString() + "  Y: " + player.Position.Y.ToString(), new Vector2(0, 50), Color.Black); 
+            _spriteBatch.DrawString(myFont, player.Points.ToString(), new Vector2(50, 25), Color.Black); 
 
             _spriteBatch.End();
             // TODO: Add your drawing code here
